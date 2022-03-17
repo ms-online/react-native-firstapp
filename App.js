@@ -6,17 +6,28 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {StyleSheet, Text, View, Button, Linking} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Button} from 'react-native';
 
 const App = () => {
+  const [name, setName] = useState('Summer');
+  const [session, setSession] = useState({id: 1, age: 18});
+  const [current, setCurrent] = useState(true);
+  const onClickHandler = () => {
+    setName('Lucy');
+    setSession({id: 2, age: 20});
+    setCurrent(false);
+  };
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>Hello World</Text>
-      <Button
-        title="进入百度"
-        onPress={() => Linking.openURL('https://www.baidu.com/')}
-      />
+      <Text style={styles.text}>My name is {name}</Text>
+      <Text style={styles.text}>
+        My student ID is {session.id},my age is {session.age}
+      </Text>
+      <Text style={styles.text}>
+        {current ? 'current session' : 'next session'}
+      </Text>
+      <Button title="切换人员" onPress={onClickHandler} />
     </View>
   );
 };
