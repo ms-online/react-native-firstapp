@@ -12,74 +12,37 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  RefreshControl,
-  FlatList,
-  SectionList,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
-
 const App = () => {
-  const Data = [
-    {title: 'Title 1', data: ['Title 1-1', 'Title 1-2', 'Title 1-3']},
-    {title: 'Title 2', data: ['Title 2-1', 'Title 2-2']},
-    {
-      title: 'Title 3',
-      data: ['Title 3-1', 'Title 3-2', 'Title 3-3', 'Title 3-4'],
-    },
-    {title: 'Title 4', data: ['Title 4-1', 'Title 4-2', 'Title 4-3']},
-  ];
-  // const [Refreshing, setRefreshing] = useState(false);
-  // const onRefresh = () => {
-  //   setRefreshing(true);
-  //   setItems([...items, {name: 'Item 11'}]);
-  //   setRefreshing(false);
-  // };
+  const [name, setName] = useState('');
+
+  //点击空白处隐藏键盘
+  const DismissKeyboard = ({children}) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+
   return (
-    <SectionList
-      sections={Data}
-      renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
-      renderSectionHeader={({section}) => (
-        <View style={styles.item}>
-          <Text style={styles.text}>{section.title}</Text>
-        </View>
-      )}
-    />
-    // <FlatList
-    //   // horizontal={false}
-    //   // numColumns={3}
-    //   // inverted
-    //   data={items}
-    //   keyExtractor={(item, index) => index.toString()}
-    //   renderItem={({item}) => (
-    //     <View style={styles.item}>
-    //       <Text style={styles.text}>{item.name}</Text>
-    //     </View>
-    //   )}
-    //   refreshControl={
-    //     <RefreshControl
-    //       refreshing={Refreshing}
-    //       onRefresh={onRefresh}
-    //       colors={['#ff00ff']}
-    //     />
-    //   }
-    // />
-    // <ScrollView
-    //   style={styles.body}
-    //   refreshControl={
-    //     <RefreshControl
-    //       refreshing={Refreshing}
-    //       onRefresh={onRefresh}
-    //       colors={['#ff00ff']}
-    //     />
-    //   }>
-    //   {items.map(obj => {
-    //     return (
-    //       <View style={styles.item} key={obj.key}>
-    //         <Text style={styles.text}>{obj.item}</Text>
-    //       </View>
-    //     );
-    //   })}
-    // </ScrollView>
+    <DismissKeyboard>
+      <View style={styles.body}>
+        <Text style={styles.text}>请输入姓名：</Text>
+        <TextInput
+          // multiline
+          style={styles.input}
+          onChangeText={value => setName(value)}
+          placeholder="e.g:Summer"
+          // maxLength={4}
+          // editable={false}
+          // secureTextEntry
+          // keyboardType="phone-pad"
+        />
+        <Text style={styles.text}>我的名字叫：{name}</Text>
+      </View>
+    </DismissKeyboard>
   );
 };
 
@@ -87,16 +50,21 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: '#ffffff',
-  },
-  item: {
-    backgroundColor: '#4ae1fa',
-    justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    justifyContent: 'center',
+  },
+  input: {
+    width: 200,
+    borderWidth: 1,
+    borderColor: '#555',
+    borderRadius: 5,
+    textAlign: 'center',
+    fontSize: 20,
   },
   text: {
     color: '#000000',
-    fontSize: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
     margin: 10,
   },
 });
