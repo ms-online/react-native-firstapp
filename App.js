@@ -8,44 +8,78 @@
  */
 
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, RefreshControl} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  RefreshControl,
+  FlatList,
+  SectionList,
+} from 'react-native';
 
 const App = () => {
-  const [items, setItems] = useState([
-    {key: 1, item: 'Item 1'},
-    {key: 2, item: 'Item 2'},
-    {key: 3, item: 'Item 3'},
-    {key: 4, item: 'Item 4'},
-    {key: 5, item: 'Item 5'},
-    {key: 6, item: 'Item 6'},
-    {key: 7, item: 'Item 7'},
-    {key: 8, item: 'Item 8'},
-    {key: 9, item: 'Item 9'},
-  ]);
-  const [Refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
-    setRefreshing(true);
-    setItems([...items, {key: 14, item: 'Item 11'}]);
-    setRefreshing(false);
-  };
+  const Data = [
+    {title: 'Title 1', data: ['Title 1-1', 'Title 1-2', 'Title 1-3']},
+    {title: 'Title 2', data: ['Title 2-1', 'Title 2-2']},
+    {
+      title: 'Title 3',
+      data: ['Title 3-1', 'Title 3-2', 'Title 3-3', 'Title 3-4'],
+    },
+    {title: 'Title 4', data: ['Title 4-1', 'Title 4-2', 'Title 4-3']},
+  ];
+  // const [Refreshing, setRefreshing] = useState(false);
+  // const onRefresh = () => {
+  //   setRefreshing(true);
+  //   setItems([...items, {name: 'Item 11'}]);
+  //   setRefreshing(false);
+  // };
   return (
-    <ScrollView
-      style={styles.body}
-      refreshControl={
-        <RefreshControl
-          refreshing={Refreshing}
-          onRefresh={onRefresh}
-          colors={['#ff00ff']}
-        />
-      }>
-      {items.map(obj => {
-        return (
-          <View style={styles.item} key={obj.key}>
-            <Text style={styles.text}>{obj.item}</Text>
-          </View>
-        );
-      })}
-    </ScrollView>
+    <SectionList
+      sections={Data}
+      renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
+      renderSectionHeader={({section}) => (
+        <View style={styles.item}>
+          <Text style={styles.text}>{section.title}</Text>
+        </View>
+      )}
+    />
+    // <FlatList
+    //   // horizontal={false}
+    //   // numColumns={3}
+    //   // inverted
+    //   data={items}
+    //   keyExtractor={(item, index) => index.toString()}
+    //   renderItem={({item}) => (
+    //     <View style={styles.item}>
+    //       <Text style={styles.text}>{item.name}</Text>
+    //     </View>
+    //   )}
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing={Refreshing}
+    //       onRefresh={onRefresh}
+    //       colors={['#ff00ff']}
+    //     />
+    //   }
+    // />
+    // <ScrollView
+    //   style={styles.body}
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing={Refreshing}
+    //       onRefresh={onRefresh}
+    //       colors={['#ff00ff']}
+    //     />
+    //   }>
+    //   {items.map(obj => {
+    //     return (
+    //       <View style={styles.item} key={obj.key}>
+    //         <Text style={styles.text}>{obj.item}</Text>
+    //       </View>
+    //     );
+    //   })}
+    // </ScrollView>
   );
 };
 
