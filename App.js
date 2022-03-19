@@ -21,6 +21,8 @@ import {
   Alert,
   ToastAndroid,
   Modal,
+  Image,
+  ImageBackground,
 } from 'react-native';
 const App = () => {
   const [name, setName] = useState('');
@@ -30,11 +32,11 @@ const App = () => {
     if (name.length > 2) {
       setSubmitted(!submitted);
     } else {
-      setShowWarning(true)
+      // setShowWarning(true)
     }
   };
   return (
-    <View style={styles.body}>
+    <ImageBackground source={{ uri:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170413%2Feff894ff1f5448fe89dbb7941d15ef8f_th.jpeg&refer=http%3A%2F%2Fimg.mp.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1650267977&t=356fb47bab2dd6e6837b96816073dbde' }} style={styles.body}>
       <Modal visible={showWarning} onRequestClose={()=>setShowWarning(false)} animationType="slide" hardwareAccelerated>
         <View style={styles.centered_view}>
           <View style={styles.warning_modal}>
@@ -73,8 +75,18 @@ const App = () => {
         onPress={onPressHandler}>
         <Text style={styles.text}>{submitted ? '已提交' : '提交'}</Text>
       </Pressable>
-      {submitted ? <Text style={styles.text}>{name}提交成功！</Text> : null}
-    </View>
+      {submitted ?
+      <View style={styles.success_submitted}>
+         <Text style={styles.text}>{name}提交成功！</Text>
+         <Image
+         style={styles.image}
+         source={require('./assets/correct.png')} resizeMode="stretch"
+         blurRadius={0}/>
+      </View> :
+         <Image
+         style={styles.image}
+         source={require('./assets/error.png')} resizeMode="stretch"/>}
+    </ImageBackground>
   );
 };
 
@@ -140,6 +152,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#00ffff',
     borderBottomRightRadius:20,
     borderBottomLeftRadius:20,
+  },
+  image:{
+    width:100,
+    height:100,
+  },
+  success_submitted:{
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
