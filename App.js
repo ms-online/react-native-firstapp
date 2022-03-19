@@ -20,25 +20,37 @@ import {
   Pressable,
   Alert,
   ToastAndroid,
+  Modal,
 } from 'react-native';
 const App = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [showWarning,setShowWarning] = useState(false);
   const onPressHandler = () => {
     if (name.length > 2) {
       setSubmitted(!submitted);
     } else {
-      // Alert.alert('警告','姓名长度必须大于2个字符',[
-      //   {text:'不再提示',onPress:()=>console.warn('不再提示')},
-      //   {text:'取消',onPress:()=>console.warn('取消点击')},
-      //   {text:'确定',onPress:()=>console.warn('确认点击')}],{cancelable:true,onDismiss:()=>console.warn('弹出框已经取消')})
-      // ToastAndroid.show('姓名长度必须大于2个字符',ToastAndroid.LONG)
-      // ToastAndroid.showWithGravity('姓名长度必须大于2个字符',ToastAndroid.LONG,ToastAndroid.TOP)
-      ToastAndroid.showWithGravityAndOffset('姓名长度必须大于2个字符',ToastAndroid.LONG,ToastAndroid.TOP,200,0)
+      setShowWarning(true)
     }
   };
   return (
     <View style={styles.body}>
+      <Modal visible={showWarning} onRequestClose={()=>setShowWarning(false)} animationType="slide" hardwareAccelerated>
+        <View style={styles.centered_view}>
+          <View style={styles.warning_modal}>
+            <View style={styles.warning_title}>
+            <Text style={styles.text}>警告！</Text>
+            </View>
+            <View style={styles.warning_body}>
+            <Text style={styles.text}>姓名长度必须大于2个字符</Text>
+            </View>
+            <Pressable style={styles.warning_button} onPress={()=>setShowWarning(false)} android_ripple={{ color:'#fff' }}>
+              <Text style={styles.text}>确认</Text>
+            </Pressable>
+          </View>
+        </View>
+
+      </Modal>
       <Text style={styles.text}>请输入姓名：</Text>
       <TextInput
         // multiline
@@ -91,10 +103,44 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#000000',
-    fontSize: 20,
+    fontSize: 15,
     // fontWeight: 'bold',
     margin: 10,
+    textAlign: 'center',
   },
+  centered_view:{
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center',
+    backgroundColor:'#00000099',
+  },
+  warning_modal:{
+    width:300,
+    height:300,
+    backgroundColor: '#fff',
+    borderWidth:1,
+    borderColor:'#000',
+    borderRadius:20,
+  },
+  warning_title:{
+    height:50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#ff0',
+    borderTopRightRadius:20,
+    borderTopLeftRadius:20,
+  },
+  warning_body:{
+    height:200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  warning_button:{
+    height:48,
+    backgroundColor:'#00ffff',
+    borderBottomRightRadius:20,
+    borderBottomLeftRadius:20,
+  }
 });
 
 export default App;
