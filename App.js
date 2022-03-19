@@ -18,12 +18,24 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 const App = () => {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const onPressHandler = () => {
-    setSubmitted(!submitted);
+    if (name.length > 2) {
+      setSubmitted(!submitted);
+    } else {
+      // Alert.alert('警告','姓名长度必须大于2个字符',[
+      //   {text:'不再提示',onPress:()=>console.warn('不再提示')},
+      //   {text:'取消',onPress:()=>console.warn('取消点击')},
+      //   {text:'确定',onPress:()=>console.warn('确认点击')}],{cancelable:true,onDismiss:()=>console.warn('弹出框已经取消')})
+      // ToastAndroid.show('姓名长度必须大于2个字符',ToastAndroid.LONG)
+      // ToastAndroid.showWithGravity('姓名长度必须大于2个字符',ToastAndroid.LONG,ToastAndroid.TOP)
+      ToastAndroid.showWithGravityAndOffset('姓名长度必须大于2个字符',ToastAndroid.LONG,ToastAndroid.TOP,200,0)
+    }
   };
   return (
     <View style={styles.body}>
@@ -38,39 +50,15 @@ const App = () => {
         // secureTextEntry
         // keyboardType="phone-pad"
       />
-      {/* <Button
-        title={submitted ? '已提交' : '提交'}
-        onPress={onPressHandler}
-        color="#00f"
-        // disabled={submitted}
-      /> */}
-      {/* <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.4}
-        onPress={onPressHandler}>
-        <Text style={styles.text}>{submitted ? '已提交' : '提交'}</Text>
-      </TouchableOpacity> */}
-      {/* <TouchableHighlight
-        style={styles.button}
-        activeOpacity={0.4}
-        onPress={onPressHandler}
-        underlayColor="#555">
-        <Text style={styles.text}>{submitted ? '已提交' : '提交'}</Text>
-      </TouchableHighlight> */}
-      {/* <TouchableWithoutFeedback onPress={onPressHandler}>
-        <View style={styles.button}>
-          <Text style={styles.text}>{submitted ? '已提交' : '提交'}</Text>
-        </View>
-      </TouchableWithoutFeedback> */}
       <Pressable
         style={({pressed}) => [
           {backgroundColor: pressed ? '#dddddd' : '#00ff00'},
           styles.button,
         ]}
         hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-        delayLongPress={2000}
+        // delayLongPress={2000}
         android_ripple={{color: '#00f'}}
-        onLongPress={onPressHandler}>
+        onPress={onPressHandler}>
         <Text style={styles.text}>{submitted ? '已提交' : '提交'}</Text>
       </Pressable>
       {submitted ? <Text style={styles.text}>{name}提交成功！</Text> : null}
