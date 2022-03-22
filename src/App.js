@@ -7,90 +7,65 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, Pressable} from 'react-native';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+// import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import ScreenA from './ScreenA';
+import ScreenB from './ScreenB';
 const App = () => {
-  function Screen_A({navigation}) {
-    const onPressHandler = () => {
-      navigation.navigate('Screen_B');
-      // navigation.replace('Screen_B')
-    };
-    return (
-      <View style={styles.body}>
-        <Text style={styles.text}>屏幕A</Text>
-        <Pressable
-          style={({pressed}) => ({backgroundColor: pressed ? '#ddd' : '#0f0'})}
-          onPress={onPressHandler}>
-          <Text style={styles.text}>进入屏幕B</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  function Screen_B({navigation}) {
-    const onPressHandler = () => {
-      //  navigation.navigate('Screen_A')
-      navigation.goBack();
-    };
-    return (
-      <View style={styles.body}>
-        <Text style={styles.text}>屏幕B</Text>
-        <Pressable
-          style={({pressed}) => ({backgroundColor: pressed ? '#ddd' : '#0f0'})}
-          onPress={onPressHandler}>
-          <Text style={styles.text}>进入屏幕A</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  const Stack = createNativeStackNavigator();
+  // const Stack = createNativeStackNavigator();
+  // const Tab = createBottomTabNavigator();
+  // const Tab = createMaterialBottomTabNavigator();
+  const Tab = createMaterialTopTabNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Screen_A"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f4511e',
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+            if (route.name === 'ScreenA') {
+              iconName = 'home';
+              size = focused ? 25 : 20;
+              color = focused ? '#f0f' : '#555';
+            } else if (route.name === 'ScreenB') {
+              iconName = 'address-card';
+              size = focused ? 25 : 20;
+              color = focused ? '#f0f' : '#555';
+            }
+            return <FontAwesome5 name={iconName} size={size} color={color} />;
           },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}>
-        <Stack.Screen
-          name="Screen_A"
-          component={Screen_A}
+          // tabBarActiveTintColor: '#f0f',
+          // tabBarInactiveTintColor: '#555',
+          // tabBarShowLabel: true,
+          // tabBarActiveBackgroundColor: '#ddd',
+          tabBarLabelStyle: {fontSize: 12},
+          // tabBarItemStyle: {width: 100},
+          tabBarStyle: {backgroundColor: 'powderblue'},
+        })}
+        activeColor="#fff"
+        inactiveColor="#3e2465"
+        barStyle={{backgroundColor: '#694fad'}}>
+        <Tab.Screen
+          name="ScreenA"
+          component={ScreenA}
           options={{
             title: 'My Home',
           }}
         />
-        <Stack.Screen
-          name="Screen_B"
-          component={Screen_B}
+        <Tab.Screen
+          name="ScreenB"
+          component={ScreenB}
           options={{
             title: 'About US',
           }}
         />
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-});
 
 export default App;
