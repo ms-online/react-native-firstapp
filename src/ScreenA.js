@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View, Pressable} from 'react-native';
 
-export default function ScreenA({navigation}) {
+export default function ScreenA({navigation, route}) {
   const onPressHandler = () => {
-    // navigation.navigate('ScreenB');
+    navigation.navigate('ScreenB');
     // navigation.replace('Screen_B')
     // navigation.openDrawer();
     // navigation.closeDrawer();
-    navigation.toggleDrawer();
+    // navigation.toggleDrawer();
   };
   return (
     <View style={styles.body}>
@@ -17,6 +17,7 @@ export default function ScreenA({navigation}) {
         onPress={onPressHandler}>
         <Text style={styles.text}>进入屏幕B</Text>
       </Pressable>
+      <Text style={styles.text}>{route.params?.message}</Text>
     </View>
   );
 }

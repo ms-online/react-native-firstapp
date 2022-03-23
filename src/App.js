@@ -39,7 +39,6 @@ const App = () => {
           name="ScreenA"
           component={ScreenA}
           options={{
-            title: 'My Home',
             drawerIcon: ({focused}) => (
               <FontAwesome5
                 name="home"
@@ -53,7 +52,6 @@ const App = () => {
           name="ScreenB"
           component={ScreenB}
           options={{
-            title: 'About US',
             drawerIcon: ({focused}) => (
               <FontAwesome5
                 name="address-card"
@@ -61,6 +59,10 @@ const App = () => {
                 size={focused ? 20 : 16}
               />
             ),
+          }}
+          initialParams={{
+            ItemId: 1,
+            ItemName: '来自于ScreenA的Item',
           }}
         />
       </Drawer.Navigator>
