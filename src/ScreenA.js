@@ -3,8 +3,11 @@ import {StyleSheet, Text, View, Pressable} from 'react-native';
 
 export default function ScreenA({navigation}) {
   const onPressHandler = () => {
-    navigation.navigate('Screen_B');
+    // navigation.navigate('ScreenB');
     // navigation.replace('Screen_B')
+    // navigation.openDrawer();
+    // navigation.closeDrawer();
+    navigation.toggleDrawer();
   };
   return (
     <View style={styles.body}>
